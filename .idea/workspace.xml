@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dac2ccba-93b8-4b1a-ad49-ec63bd1adc3a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/arff_making.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data_preprocessing.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data_training.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/jieba_utils.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/word_vector_factory.py" />
-    </list>
+    <list default="true" id="dac2ccba-93b8-4b1a-ad49-ec63bd1adc3a" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
