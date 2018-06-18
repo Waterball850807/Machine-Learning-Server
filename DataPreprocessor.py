@@ -14,6 +14,7 @@ CITIES = ['臺北市', '新北市', '臺中市', '臺南市', '高雄市', '桃�
           '竹北市', '太保市', '朴子市', '員林市', '頭份市']
 
 MAX_ASSOCIATION_SEQUENCES = 200
+WORD_VECTOR_NORMALIZED_FACTOR = 100
 
 
 class DataPreprocessor:
@@ -76,7 +77,7 @@ class DataPreprocessor:
             labels.append(DataPreprocessor.create_one_hot_tags_label(activity['ActivityTags']))
 
         data = get_word_embedding_vectors(activity_texts)
-        return np.array(data, dtype=np.float64) / 100, np.array(labels)
+        return np.array(data, dtype=np.float64) / WORD_VECTOR_NORMALIZED_FACTOR, np.array(labels)
 
     @staticmethod
     def enumerate_sequences_labels(data):
@@ -115,6 +116,11 @@ class DataPreprocessor:
         user_feature = DataPreprocessor.get_user_feature(association['user'])
         return activity_feature + user_feature + [association['action']]
 
+    @staticmethod
+    def get_user_associations_sequence(associations):
+        return [DataPreprocessor.get_association_feature(association)
+                        for association in associations]
+
     def get_association_training_sequences_labels(self):
         with open('associations.json', 'r', encoding='utf-8') as fr:
             associations = json.load(fr)['data']
@@ -130,14 +136,10 @@ class DataPreprocessor:
             userid_to_associations[userid] = sorted(associations, key=lambda a: self.parse_date(a['date']))
 
         # create all sequences of association features of each user
-        data = []
-        for userid, associations in userid_to_associations.items():
-            sequence = [DataPreprocessor.get_association_feature(association)
-                        for association in associations]
-            data.append(sequence)
+        data = [DataPreprocessor.get_user_associations_sequence(associations)
+                for associations in userid_to_associations.values()]
 
-        sequences, labels = DataPreprocessor.enumerate_sequences_labels(data)
-        return sequences, labels
+        return DataPreprocessor.enumerate_sequences_labels(data)
 
 
 if __name__ == '__main__':

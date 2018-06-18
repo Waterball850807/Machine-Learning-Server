@@ -1,9 +1,9 @@
-from server.base import *
+from base import *
 
 
 class StubActivityContentClassifier(ActivityContentClassifier):
     def classify(self, content):
-        return [{'id': 0, 'name': '旅遊'}, {'id': 1, 'name': '運動'}]
+        return ['旅遊', '運動']
 
 
 class StubUserPreferencesPredictor(UserPreferencesPredictor):

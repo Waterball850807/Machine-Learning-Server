@@ -87,7 +87,7 @@ class AgentLearningServer(BaseHTTPRequestHandler):
 def run(server_class=HTTPServer, handler_class=None, port=80):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
-    print('Starting httpd...')
+    print('Starting http...')
     httpd.serve_forever()
 
 
@@ -99,9 +99,9 @@ def is_admin():
 
 
 if __name__ == "__main__":
-    from server.base import *
-    from server.stubs import *
-    from server.keras_model_adapters import *
+    from base import *
+    from stubs import *
+    from keras_model_adapters import *
     from sys import argv
     sys.path.append(os.path.dirname(os.getcwd()))
 
