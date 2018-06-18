@@ -15,6 +15,7 @@ CITIES = ['臺北市', '新北市', '臺中市', '臺南市', '高雄市', '桃�
 
 MAX_ASSOCIATION_SEQUENCES = 200
 WORD_VECTOR_NORMALIZED_FACTOR = 100
+MAX_WORD_COUNT = 500
 
 
 class DataPreprocessor:
@@ -119,7 +120,7 @@ class DataPreprocessor:
     @staticmethod
     def get_user_associations_sequence(associations):
         return [DataPreprocessor.get_association_feature(association)
-                        for association in associations]
+                for association in associations]
 
     def get_association_training_sequences_labels(self):
         with open('associations.json', 'r', encoding='utf-8') as fr:
@@ -141,17 +142,28 @@ class DataPreprocessor:
 
         return DataPreprocessor.enumerate_sequences_labels(data)
 
-    def get_cnn_representation_training_data_labels(self):
+    FEATURE_TYPE_N_OF_WORDS = 0
+    FEATURE_TYPE_WORD_EMBEDDING = 1
+
+    def get_cnn_representation_training_data_labels(self, feature_type):
+        """
+        :param feature_type: FEATURE_TYPE_N_OF_WORDS or FEATURE_TYPE_WORD_EMBEDDING
+        :return:
+        """
         activity_texts = []
         labels = []
+        featurer = feature_n_of_words if feature_type == 0 else feature_word_embedding
 
         for activity in self.get_tagged_activities():
             activity_texts.append(clean_html(activity['title'] + activity['content']))
             labels.append(DataPreprocessor.create_one_hot_tags_label(activity['ActivityTags']))
 
-        data, self.word_list, self.word_to_index = get_word_frequency_vectors(activity_texts,
-                                                                              output_file_name='word_list.txt')
+        data = get_words_2d_representations(activity_texts,
+                                            MAX_WORD_COUNT,
+                                            'word_list.txt',
+                                            feature_type=featurer)
         return np.array(data), np.array(labels), self.word_list
+
 
 if __name__ == '__main__':
     preprocessor = DataPreprocessor()

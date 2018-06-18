@@ -1,3 +1,4 @@
 *.bz2
 *.arff
 *.hdf5
+*.pickle

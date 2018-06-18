@@ -90,12 +90,12 @@ def get_words_2d_representation(content, max_words, word_list, feature_type=feat
     word_to_index = dict((word, index) for index, word in enumerate(word_list))
     representation = [0] * max_words
     words = jieba_utils.cut(content, cut_all=cut_all)
-    for i in range(len(words)):
+    for i in range(min(len(words), max_words)):
         representation[i] = feature_type(words[i], word_to_index)
     if len(words) < max_words:
         for i in range(len(words), max_words):
             representation[i] = [0] * len(representation[0])
-    return np.array(representation)
+    return np.array([representation])
 
 
 def get_words_2d_representations(samples, max_words, words_file_name, feature_type=feature_n_of_words, cut_all=False):

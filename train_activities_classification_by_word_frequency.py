@@ -1,12 +1,11 @@
 from keras.callbacks import ModelCheckpoint
 import numpy as np
-
-
+import pickle
 import model_utils
 import DataPreprocessor
 from keras.layers import *
 from keras.models import *
-
+from sklearn.decomposition import PCA
 import words_preprocessing_utils
 from WeightsSaver import WeightsSaver
 
@@ -19,24 +18,24 @@ if __name__ == '__main__':
     np.random.shuffle(random_mask)
 
     count = len(data)
-    data = data[random_mask]
+    pca_data = data[random_mask]
     labels = labels[random_mask]
 
-    print('Data shape: ', data.shape)
+    print('Data shape: ', pca_data.shape)
     print('Labels shape: ', labels.shape)
 
-    epoch = 300
-    batch_size = 30
+    epoch = 100
+    batch_size = 32
     model = Sequential()
-    model.add(Dense(5000, input_dim=data.shape[1]))
+    model.add(Dense(780, input_dim=data.shape[1]))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(Dropout(0.3))
-    model.add(Dense(5000))
+    model.add(Dense(780))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(Dropout(0.3))
-    model.add(Dense(5000))
+    model.add(Dense(780))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(Dropout(0.3))
