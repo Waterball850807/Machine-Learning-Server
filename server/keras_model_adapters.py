@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.linalg import norm
 from keras.models import load_model
 from base import *
 from keras.preprocessing.sequence import pad_sequences
@@ -7,7 +8,7 @@ from DataPreprocessor import DataPreprocessor, MAX_ASSOCIATION_SEQUENCES, WORD_V
 
 
 def count_cosine_distance(narray1, narray2):
-    return np.dot(narray1, narray2) / ( (np.dot(narray1, narray1) **.5) * (np.dot(narray2, narray2) ** .5) )
+    return np.inner(narray1, narray2) / (norm(narray1) * norm(narray2))
 
 
 class KerasActivityContentClassifier(ActivityContentClassifier):

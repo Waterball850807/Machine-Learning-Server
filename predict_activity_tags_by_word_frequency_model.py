@@ -11,10 +11,6 @@ model = load_model('word_frequency_model_e100_b30_200_3layers.hdf5')
 weights = model.get_weights()
 model.summary()
 
-print(preprocessor.word_to_index['白目'])
-print(preprocessor.word_to_index['申請書'])
-print(preprocessor.word_to_index['無悔'])
-print(preprocessor.word_to_index['當代'])
 torture_word_frequency_model(model, word_list)
 
 

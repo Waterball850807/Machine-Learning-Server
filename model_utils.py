@@ -7,7 +7,7 @@ def torture_word_frequency_model(model, word_list):
     while True:
         try:
             content = words_preprocessing_utils.clean_html(input('Content: '))
-            x = words_preprocessing_utils.get_word_frequency_vector(content, word_list)
+            x = words_preprocessing_utils.get_word_frequency_vector(content, word_list) / DataPreprocessor.WORD_VECTOR_NORMALIZED_FACTOR
             x = np.reshape(x, (1, len(x)))
             y = model.predict(x)[0]
             print(y)

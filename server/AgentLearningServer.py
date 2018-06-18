@@ -87,7 +87,7 @@ class AgentLearningServer(BaseHTTPRequestHandler):
 def run(server_class=HTTPServer, handler_class=None, port=80):
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
-    print('Starting http...')
+    print('Now the http server is serving.')
     httpd.serve_forever()
 
 
@@ -103,14 +103,16 @@ if __name__ == "__main__":
     from stubs import *
     from keras_model_adapters import *
     from sys import argv
-    sys.path.append(os.path.dirname(os.getcwd()))
 
     # if the script is not run in the administrator privilege, pop up the UAC dialog to seek to elevate
     if not is_admin():
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
 
+    print('Models are building...')
     activity_text_classifier = StubActivityContentClassifier()  # KerasActivityContentClassifier()
     user_preferences_predictor = StubUserPreferencesPredictor()  # KerasUserPreferencesPredictor()
+
+    print('Models built successfully.')
 
     port = int(argv[1]) if len(argv) == 2 else 5000
 

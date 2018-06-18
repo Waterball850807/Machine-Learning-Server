@@ -141,6 +141,17 @@ class DataPreprocessor:
 
         return DataPreprocessor.enumerate_sequences_labels(data)
 
+    def get_cnn_representation_training_data_labels(self):
+        activity_texts = []
+        labels = []
+
+        for activity in self.get_tagged_activities():
+            activity_texts.append(clean_html(activity['title'] + activity['content']))
+            labels.append(DataPreprocessor.create_one_hot_tags_label(activity['ActivityTags']))
+
+        data, self.word_list, self.word_to_index = get_word_frequency_vectors(activity_texts,
+                                                                              output_file_name='word_list.txt')
+        return np.array(data), np.array(labels), self.word_list
 
 if __name__ == '__main__':
     preprocessor = DataPreprocessor()
