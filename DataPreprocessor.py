@@ -30,7 +30,6 @@ class DataPreprocessor:
         date = dateutil.parser.parse(s)
         return date
 
-
     @staticmethod
     def create_one_hot_tags_label(activity_tags):
         one_hot = np.zeros(len(ACTIVITY_TAGS))
@@ -56,7 +55,7 @@ class DataPreprocessor:
                 if len(a['ActivityTags']) != 0 and
                 len([tag for tag in a['ActivityTags'] if tag['name'] == '垃圾']) == 0]  # exclude 垃圾
 
-    def get_words_frequency(self):
+    def get_words_frequency_preprocessing(self):
         activity_texts = []
         labels = []
 
@@ -68,7 +67,7 @@ class DataPreprocessor:
                                                                               output_file_name='word_list.txt')
         return np.array(data), np.array(labels), self.word_list
 
-    def get_words_embedding(self):
+    def get_words_embedding_preprocessing(self):
         labels = []
         activity_texts = []
 
@@ -77,7 +76,7 @@ class DataPreprocessor:
             labels.append(DataPreprocessor.create_one_hot_tags_label(activity['ActivityTags']))
 
         data = get_word_embedding_vectors(activity_texts)
-        return np.array(data), np.array(labels)
+        return np.array(data, dtype=np.float64) / 100, np.array(labels)
 
     @staticmethod
     def enumerate_sequences_labels(data):

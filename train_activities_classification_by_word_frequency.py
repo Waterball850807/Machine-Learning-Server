@@ -13,7 +13,7 @@ from WeightsSaver import WeightsSaver
 if __name__ == '__main__':
     preprocessor = DataPreprocessor.DataPreprocessor()
 
-    data, labels, word_list = preprocessor.get_words_frequency()
+    data, labels, word_list = preprocessor.get_words_frequency_preprocessing()
 
     random_mask = np.arange(len(data))
     np.random.shuffle(random_mask)

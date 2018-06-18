@@ -9,7 +9,7 @@ from keras.models import *
 
 if __name__ == '__main__':
     preprocessor = DataPreprocessor.DataPreprocessor()
-    data, labels = preprocessor.get_words_embedding()
+    data, labels = preprocessor.get_words_embedding_preprocessing()
 
     random_mask = np.arange(len(data))
     np.random.shuffle(random_mask)
